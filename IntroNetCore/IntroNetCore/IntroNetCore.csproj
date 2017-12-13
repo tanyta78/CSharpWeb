@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Intro.Data\Intro.Data.csproj" />
+    <ProjectReference Include="..\Intro.Models\Intro.Models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Core\Commands\" />
+  </ItemGroup>
+
+</Project>
