@@ -1,9 +1,0 @@
-D:\GitHub\C#WebCore\IntroNetCore\Intro.Models\bin\Debug\netcoreapp2.0\Intro.Models.deps.json
-D:\GitHub\C#WebCore\IntroNetCore\Intro.Models\bin\Debug\netcoreapp2.0\Intro.Models.dll
-D:\GitHub\C#WebCore\IntroNetCore\Intro.Models\bin\Debug\netcoreapp2.0\Intro.Models.pdb
-D:\GitHub\C#WebCore\IntroNetCore\Intro.Models\obj\Debug\netcoreapp2.0\Intro.Models.csproj.CoreCompileInputs.cache
-D:\GitHub\C#WebCore\IntroNetCore\Intro.Models\obj\Debug\netcoreapp2.0\Intro.Models.AssemblyInfoInputs.cache
-D:\GitHub\C#WebCore\IntroNetCore\Intro.Models\obj\Debug\netcoreapp2.0\Intro.Models.AssemblyInfo.cs
-D:\GitHub\C#WebCore\IntroNetCore\Intro.Models\obj\Debug\netcoreapp2.0\Intro.Models.dll
-D:\GitHub\C#WebCore\IntroNetCore\Intro.Models\obj\Debug\netcoreapp2.0\Intro.Models.pdb
-D:\GitHub\C#WebCore\IntroNetCore\Intro.Models\obj\Debug\netcoreapp2.0\Intro.Models.csprojResolveAssemblyReference.cache
