@@ -10,8 +10,4 @@
     <ProjectReference Include="..\Intro.Models\Intro.Models.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Core\Commands\" />
-  </ItemGroup>
-
 </Project>

@@ -2,6 +2,6 @@
 {
     internal class ServerConfig
     {
-        internal static string ConnectionString => "Server=DESKTOP-LAHCAG9\\SQLEXPRESS;Database=SchoolCompetition;Integrated Security=True;";
+        internal static string ConnectionString => "Server=(localdb)\\MSSQLLocalDB;Database=SchoolCompetition;Integrated Security=True;";
     }
 }

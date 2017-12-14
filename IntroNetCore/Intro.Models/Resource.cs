@@ -1,4 +1,6 @@
-﻿namespace Intro.Models
+﻿using System.Collections.Generic;
+
+namespace Intro.Models
 {
     public class Resource
     {
@@ -13,5 +15,7 @@
         public int CourceId { get; set; }
 
         public Course Course { get; set; }
+
+        public ICollection<License> Licenses { get; set; }=new List<License>();
     }
 }

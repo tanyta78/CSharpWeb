@@ -3,16 +3,16 @@
     using Microsoft.EntityFrameworkCore;
     using Models;
 
-    public class SchoolDbContext:DbContext
+    public class SchoolDbContext : DbContext
     {
         public SchoolDbContext()
         {
-            
+
         }
 
-        public SchoolDbContext(DbContextOptions options):base(options)
+        public SchoolDbContext(DbContextOptions options) : base(options)
         {
-            
+
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -32,7 +32,13 @@
         public DbSet<StudentsCourses> StudentsCourseses { get; set; }
 
         public DbSet<Resource> Resources { get; set; }
-        
+
+        public DbSet<Student> Students { get; set; }
+
+        public DbSet<Course> Courses { get; set; }
+
+        public DbSet<License> Licenses { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -55,7 +61,7 @@
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<StudentsCourses>()
-                .HasKey(sc => new {sc.StudentId, sc.CourseId});
+                .HasKey(sc => new { sc.StudentId, sc.CourseId });
 
         }
     }
