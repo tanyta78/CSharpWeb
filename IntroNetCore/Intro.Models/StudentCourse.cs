@@ -1,6 +1,6 @@
 ﻿namespace Intro.Models
 {
-    public class StudentsCourses
+    public class StudentCourse
     {
         public int StudentId { get; set; }
 

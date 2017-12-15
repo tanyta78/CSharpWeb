@@ -18,7 +18,7 @@
 
         public DateTime BirthDay { get; set; }
 
-        public ICollection<StudentsCourses> CourseParticipateIn { get; set; } = new List<StudentsCourses>();
+        public ICollection<StudentCourse> CourseParticipateIn { get; set; } = new List<StudentCourse>();
 
         public ICollection<Homework> Homeworks { get; set; }=new List<Homework>();
     }

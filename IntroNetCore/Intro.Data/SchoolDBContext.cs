@@ -29,7 +29,7 @@
 
         public DbSet<Homework> Homeworks { get; set; }
 
-        public DbSet<StudentsCourses> StudentsCourseses { get; set; }
+        public DbSet<StudentCourse> StudentsCourseses { get; set; }
 
         public DbSet<Resource> Resources { get; set; }
 
@@ -48,19 +48,19 @@
                 .HasForeignKey(e => e.ManagerId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<StudentsCourses>()
+            modelBuilder.Entity<StudentCourse>()
                 .HasOne(sc => sc.Student)
                 .WithMany(s => s.CourseParticipateIn)
                 .HasForeignKey(sc => sc.StudentId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<StudentsCourses>()
+            modelBuilder.Entity<StudentCourse>()
                 .HasOne(sc => sc.Course)
                 .WithMany(c => c.Participants)
                 .HasForeignKey(sc => sc.CourseId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<StudentsCourses>()
+            modelBuilder.Entity<StudentCourse>()
                 .HasKey(sc => new { sc.StudentId, sc.CourseId });
 
         }

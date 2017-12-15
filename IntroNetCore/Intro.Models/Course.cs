@@ -23,7 +23,7 @@
 
         public ICollection<Homework> HomeworkSubmissions { get; set; }=new List<Homework>();
 
-        public ICollection<StudentsCourses> Participants { get; set; }=new List<StudentsCourses>();
+        public ICollection<StudentCourse> Participants { get; set; }=new List<StudentCourse>();
 
         public ICollection<Resource> Resources { get; set; }=new List<Resource>();
     }
