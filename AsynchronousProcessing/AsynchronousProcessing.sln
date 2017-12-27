@@ -3,11 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P01EvenNumberThread", "ConsoleApp1\P01EvenNumberThread.csproj", "{DCEF9207-C639-491A-8F63-F5B45B40FB91}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P01EvenNumberThread", "ConsoleApp1\P01EvenNumberThread.csproj", "{DCEF9207-C639-491A-8F63-F5B45B40FB91}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P02SliceFile", "P02SliceFile\P02SliceFile.csproj", "{898ABFD2-8154-4348-92EC-E447D42DCDDC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P02SliceFile", "P02SliceFile\P02SliceFile.csproj", "{898ABFD2-8154-4348-92EC-E447D42DCDDC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P021ParalelImageFlips", "P021ParalelImageFlips\P021ParalelImageFlips.csproj", "{9A5BB267-BDCA-4B47-B622-F495EBC2795B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P021ParalelImageFlips", "P021ParalelImageFlips\P021ParalelImageFlips.csproj", "{9A5BB267-BDCA-4B47-B622-F495EBC2795B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AsyncAwaitDemo", "AsyncDemo\AsyncAwaitDemo.csproj", "{0702B350-64E0-46FB-8463-D4AE48E1962E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P00DownloadFilesAsync", "P00DownloadFilesAsync\P00DownloadFilesAsync.csproj", "{4E171F0A-1FDE-4030-9597-AC939E7F4FC5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P03SimpleWebServer", "tcpListener\P03SimpleWebServer.csproj", "{E349AB50-75E0-4917-B7CB-2C57B39F366D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +33,18 @@ Global
 		{9A5BB267-BDCA-4B47-B622-F495EBC2795B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9A5BB267-BDCA-4B47-B622-F495EBC2795B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9A5BB267-BDCA-4B47-B622-F495EBC2795B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0702B350-64E0-46FB-8463-D4AE48E1962E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0702B350-64E0-46FB-8463-D4AE48E1962E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0702B350-64E0-46FB-8463-D4AE48E1962E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0702B350-64E0-46FB-8463-D4AE48E1962E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E171F0A-1FDE-4030-9597-AC939E7F4FC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E171F0A-1FDE-4030-9597-AC939E7F4FC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E171F0A-1FDE-4030-9597-AC939E7F4FC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E171F0A-1FDE-4030-9597-AC939E7F4FC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E349AB50-75E0-4917-B7CB-2C57B39F366D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E349AB50-75E0-4917-B7CB-2C57B39F366D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E349AB50-75E0-4917-B7CB-2C57B39F366D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E349AB50-75E0-4917-B7CB-2C57B39F366D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
