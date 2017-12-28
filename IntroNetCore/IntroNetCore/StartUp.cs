@@ -13,16 +13,17 @@ namespace IntroNetCore
 
     public class Program
     {
+        
         public static void Main()
         {
             // P00_SchoolCompetition();
 
             var context = new SchoolDbContext();
-           //   DatabaseInitializer.ResetDatabase(context);
-            Console.WriteLine("Database created!");
+            //   DatabaseInitializer.ResetDatabase(context);
+            // Console.WriteLine("Database created!");
 
-           //  DatabaseInitializer.InitialSeed(context);
-            Console.WriteLine("Database seeded!");
+            //  DatabaseInitializer.InitialSeed(context);
+            // Console.WriteLine("Database seeded!");
 
             //P01_ListAllStudents(context);
             // P02_ListAllCourses(context);
@@ -32,24 +33,26 @@ namespace IntroNetCore
             //P04_ListAllCoursesWithMoreThan5Resourses(context, date);
             // P05_ListAllStudentInfo(context);
             // P06_ListAllCoursesWithResourses(context);
-             P07_ListAllStudentInfo(context);
-
-
+            // P07_ListAllStudentInfo(context);
+            var tab = new int[15];
+           var result =  tab.Length;
+            Console.WriteLine(result);
         }
+        
 
         private static void P07_ListAllStudentInfo(SchoolDbContext context)
         {
             var students = context.Students
                                   .Include(s => s.CourseParticipateIn)
                                   .ThenInclude(sc => sc.Course)
-                                  .ThenInclude(c=>c.Resources)
-                                  .ThenInclude(r=>r.Licenses)
+                                  .ThenInclude(c => c.Resources)
+                                  .ThenInclude(r => r.Licenses)
                                   .Select(s => new
                                   {
                                       Name = s.Name,
                                       NumberOfCourses = s.CourseParticipateIn.Count,
-                                      TotalResourses = s.CourseParticipateIn.Sum(cs=>cs.Course.Resources.Count),
-                                      TotalLicenses = s.CourseParticipateIn.Sum(cs => cs.Course.Resources.Sum(r=>r.Licenses.Count))
+                                      TotalResourses = s.CourseParticipateIn.Sum(cs => cs.Course.Resources.Count),
+                                      TotalLicenses = s.CourseParticipateIn.Sum(cs => cs.Course.Resources.Sum(r => r.Licenses.Count))
                                   })
                                   .OrderByDescending(s => s.NumberOfCourses)
                                   .ThenByDescending(s => s.TotalResourses)
@@ -76,19 +79,19 @@ namespace IntroNetCore
                                  {
                                      Name = c.Name,
                                      ResourcesNames = c.Resources.Select(r => new
-                                                       {
-                                                           resourceName = r.Name,
-                                                           licencesNames = r.Licenses.Select(l => new
-                                                           {
-                                                               licenseName = l.Name
-                                                           }).ToList()
-                                                       }).ToList()
-                                                     
+                                     {
+                                         resourceName = r.Name,
+                                         licencesNames = r.Licenses.Select(l => new
+                                         {
+                                             licenseName = l.Name
+                                         }).ToList()
+                                     }).ToList()
+
                                  })
-                                 .OrderByDescending(c=>c.ResourcesNames.Count())
+                                 .OrderByDescending(c => c.ResourcesNames.Count())
                                  .ThenBy(c => c.Name)
                                  .ToList();
-                                
+
 
             var sb = new StringBuilder();
 
