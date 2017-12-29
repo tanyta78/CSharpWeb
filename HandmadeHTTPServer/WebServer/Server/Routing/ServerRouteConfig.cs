@@ -96,6 +96,6 @@
         }
 
 
-        public Dictionary<HttpRequestMethod, Dictionary<string, IRoutingContext>> Routes { get; }
+        public Dictionary<HttpRequestMethod, Dictionary<string, IRoutingContext>> Routes => this.routes;
     }
 }

@@ -1,6 +1,7 @@
 ﻿namespace WebServer.Server.Handlers
 {
     using System.Text.RegularExpressions;
+    using Common;
     using Contracts;
     using Http.Contracts;
     using Http.Response;
@@ -10,9 +11,11 @@
     {
         private readonly IServerRouteConfig serverRouteConfig;
 
-        public HttpHandler(IServerRouteConfig routeConfig)
+        public HttpHandler(IServerRouteConfig serverRouteConfig)
         {
-            this.serverRouteConfig = routeConfig;
+            MyValidator.ThrowIfNull(serverRouteConfig, nameof(serverRouteConfig));
+            
+            this.serverRouteConfig = serverRouteConfig;
         }
         
         
