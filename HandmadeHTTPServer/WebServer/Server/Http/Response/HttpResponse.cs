@@ -12,9 +12,11 @@
         protected HttpResponse()
         {
             this.Headers = new HttpHeaderCollection();
+            this.Cookies = new HttpCookieCollection();
         }
 
-        public HttpHeaderCollection Headers { get; }
+        public IHttpHeaderCollection Headers { get; }
+        public IHttpCookieCollection Cookies { get; }
 
         public HttpStatusCode StatusCode { get; protected set; }
 
@@ -28,8 +30,7 @@
             response.AppendLine($"HTTP/1.1 {statusCode} {this.statusCodeMessage}");
 
             response.AppendLine(this.Headers.ToString());
-            response.AppendLine();
-
+          
             return response.ToString();
         }
     }

@@ -1,13 +1,13 @@
 ﻿namespace WebServer.Server.Http.Response
 {
-    using Contracts;
+    using Common;
     using Enums;
 
-    public class NotFoundResponse:HttpResponse
+    public class NotFoundResponse:ViewResponse
     {
-        public NotFoundResponse()
+        public NotFoundResponse():base(HttpStatusCode.NotFound,new NotFoundView())
         {
-            this.StatusCode = HttpStatusCode.NotFound;
+           
         }
 
       

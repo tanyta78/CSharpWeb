@@ -20,8 +20,16 @@
         public IHttpResponse Handle(IHttpContext httpContext)
         {
             var response = this.handlingFunc(httpContext.Request);
-            
-            response.Headers.Add(new HttpHeader("Content-Type", "text/plain"));
+
+            if (!response.Headers.ContainsKey(HttpHeader.ContentType))
+            {
+                response.Headers.Add(HttpHeader.ContentType, "text/plain");
+            }
+
+            foreach (var cookie in response.Cookies)
+            {
+                response.Headers.Add(HttpHeader.SetCookie, cookie.ToString());
+            }
 
             return response;
         }
