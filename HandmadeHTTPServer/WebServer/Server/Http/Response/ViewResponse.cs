@@ -1,6 +1,5 @@
 ﻿namespace WebServer.Server.Http.Response
 {
-    using System;
     using Enums;
     using Exceptions;
     using Server.Contracts;
@@ -15,8 +14,13 @@
 
             this.view = view;
             this.StatusCode = statusCode;
+<<<<<<< HEAD
             
     
+=======
+
+            this.Headers.Add(HttpHeader.ContentType, "text/html");
+>>>>>>> origin/master
         }
 
         private void ValidateStatusCode(HttpStatusCode statusCode)

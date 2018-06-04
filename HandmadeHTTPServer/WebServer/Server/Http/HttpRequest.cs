@@ -12,16 +12,23 @@
     public class HttpRequest : IHttpRequest
     {
         private readonly string requestText;
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> origin/master
         public HttpRequest(string requestText)
         {
             MyValidator.ThrowIfNullOrEmpty(requestText, nameof(requestText));
+            this.requestText = requestText;
+
             this.requestText = requestText;
 
             this.FormData = new Dictionary<string, string>();
             this.Headers = new HttpHeaderCollection();
             this.QueryParameters = new Dictionary<string, string>();
             this.UrlParameters = new Dictionary<string, string>();
+            this.Cookies=new HttpCookieCollection();
 
             this.ParseRequest(requestText);
         }
@@ -31,6 +38,8 @@
         public IDictionary<string, string> FormData { get; private set; }
 
         public HttpHeaderCollection Headers { get; private set; }
+
+        public IHttpCookieCollection Cookies { get; set; }
 
         public string Path { get; private set; }
 
@@ -78,44 +87,43 @@
 
             //{Headers} while empty line
             this.ParseHeaders(requestLines);
+            this.ParseCookies();
             this.ParseParameters();
 
             //{Form Data}
             this.ParseFormData(requestLines.Last());
-        }  
-
-        private void ParseFormData(string formDataLine)
-        {
-            if (this.Method == HttpRequestMethod.Get)
-            {
-                return;
-            }
-            // username=pesho&pass=133
-           this.ParseQuery(formDataLine,this.FormData);
         }
 
-        private void ParseParameters()
+        private HttpRequestMethod ParseMethod(string method)
         {
-            if (!this.Url.Contains('?'))
+            HttpRequestMethod parsedMethod;
+            if (!Enum.TryParse(method, true, out parsedMethod))
             {
-                return;
+                BadRequestException.ThrowFromInvalidRequest();
             }
-            
-            var query = this.Url
-                .Split(new[] { '?' }, StringSplitOptions.RemoveEmptyEntries)
-                .Last();
+<<<<<<< HEAD
+            // username=pesho&pass=133
+           this.ParseQuery(formDataLine,this.FormData);
+=======
 
-            // /register?name=ivan
-            this.ParseQuery(query,this.UrlParameters);
-            
+            return parsedMethod;
+>>>>>>> origin/master
+        }
+
+        private string ParsePath(string url)
+        {
+            // / user/register/5?name=Pesho#gosho
+            return url.Split(new[] { '?', '#' }, StringSplitOptions.RemoveEmptyEntries)[0];
         }
 
         private void ParseHeaders(string[] requestLines)
         {
             var emptyLineIndex = Array.IndexOf(requestLines, String.Empty);
+
             for (int i = 1; i < emptyLineIndex; i++)
             {
-                var headerParts = requestLines[i].Split(new[] { ": " }, StringSplitOptions.RemoveEmptyEntries);
+                var currentLine = requestLines[i];
+                var headerParts =currentLine.Split(new[] { ": " }, StringSplitOptions.RemoveEmptyEntries);
 
                 if (headerParts.Length != 2)
                 {
@@ -127,33 +135,83 @@
                 var headerValue = headerParts[1].Trim();
 
                 var header = new HttpHeader(headerKey, headerValue);
+
                 this.Headers.Add(header);
             }
 
-            if (!this.Headers.ContainsKey("Host"))
+            if (!this.Headers.ContainsKey(HttpHeader.Host))
             {
                 BadRequestException.ThrowFromInvalidRequest();
 
             }
         }
 
-        private string ParsePath(string url)
+        private void ParseCookies()
         {
-            // / user/register/5?name=Pesho#gosho
-            return url.Split(new[] { '?', '#' }, StringSplitOptions.RemoveEmptyEntries)[0];
+            if (this.Headers.ContainsKey(HttpHeader.Cookie))
+            {
+                var allCookies = this.Headers.GetHeader(HttpHeader.Cookie);
+
+                foreach (var cookie in allCookies)
+                {
+                    if (!cookie.Value.Contains('='))
+                    {
+                        return;
+                    }
+
+                    var cookieParts = cookie
+                        .Value
+                        .Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries)
+                        .ToList();
+
+                    if (!cookieParts.Any())
+                    {
+                        continue;
+                    }
+
+                    foreach (var cookiePart in cookieParts)
+                    {
+                        var cookieKeyValuePair = cookiePart
+                            .Split(new[] { '=' }, StringSplitOptions.RemoveEmptyEntries);
+
+                        if (cookieKeyValuePair.Length == 2)
+                        {
+                            var key = cookieKeyValuePair[0].Trim();
+                            var value = cookieKeyValuePair[1].Trim();
+
+                            this.Cookies.Add(new HttpCookie(key, value, false));
+                        }
+                    }
+                }
+            }
         }
 
-        private HttpRequestMethod ParseMethod(string method)
+        private void ParseParameters()
         {
-            HttpRequestMethod parsedMethod;
-            if (!Enum.TryParse<HttpRequestMethod>(method, true, out parsedMethod))
+            if (!this.Url.Contains('?'))
             {
-                BadRequestException.ThrowFromInvalidRequest();
+                return;
             }
 
-            return parsedMethod;
+            var query = this.Url
+                            .Split(new[] { '?' }, StringSplitOptions.RemoveEmptyEntries)
+                            .Last();
+
+            // /register?name=ivan
+            this.ParseQuery(query, this.UrlParameters);
+
         }
 
+        private void ParseFormData(string formDataLine)
+        {
+            if (this.Method == HttpRequestMethod.Get)
+            {
+                return;
+            }
+            // username=pesho&pass=133
+           this.ParseQuery(formDataLine,this.FormData);
+        }
+        
         private void ParseQuery(string query,IDictionary<string,string>dict)
         {
            if (!query.Contains('='))
@@ -166,6 +224,10 @@
             foreach (var queryPair in queryPairs)
             {
                 var querykvp = queryPair.Split(new[] {'='});
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
                 if (querykvp.Length != 2)
                 {
                     return;

@@ -1,25 +1,45 @@
 ﻿namespace WebServer.Server.Http
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
+<<<<<<< HEAD
     using System.Linq;
+=======
+    using System.Text;
+>>>>>>> origin/master
     using Common;
     using Contracts;
 
     public class HttpHeaderCollection : IHttpHeaderCollection
     {
-        private readonly IDictionary<string, HttpHeader> headers;
+        private readonly IDictionary<string, ICollection<HttpHeader>> headers;
 
         public HttpHeaderCollection()
         {
-            this.headers = new Dictionary<string, HttpHeader>();
+            this.headers = new Dictionary<string,ICollection<HttpHeader>>();
         }
         
         public void Add(HttpHeader header)
         {
             MyValidator.ThrowIfNull(header,nameof(header));
 
-            this.headers[header.Key] = header;
+            var headerKey = header.Key;
+
+            if (!this.headers.ContainsKey(headerKey))
+            {
+                this.headers[headerKey] =new List<HttpHeader>();
+            }
+
+            this.headers[headerKey].Add(header);
+        }
+
+        public void Add(string key, string value)
+        {
+            MyValidator.ThrowIfNullOrEmpty(key, nameof(key));
+            MyValidator.ThrowIfNullOrEmpty(value, nameof(value));
+
+            this.Add(new HttpHeader(key, value));
         }
 
         public bool ContainsKey(string key)
@@ -29,7 +49,7 @@
             return this.headers.ContainsKey(key);
         }
 
-        public HttpHeader GetHeader(string key)
+        public ICollection<HttpHeader> GetHeader(string key)
         {
             MyValidator.ThrowIfNull(key,nameof(key));
 
@@ -42,6 +62,31 @@
         }
 
         public override string ToString()
+<<<<<<< HEAD
        =>String.Join(Environment.NewLine,this.headers.Select(h=>h.Value.ToString()));
+=======
+        {
+            var sb = new StringBuilder();
+
+            foreach (var header in this.headers)
+            {
+                var headerKey = header.Key;
+
+                foreach (var headerValue in header.Value)
+                {
+                    sb.AppendLine($"{headerKey}: {headerValue.Value}");
+                }
+            }
+
+            return sb.ToString().Trim();
+        }
+
+        public IEnumerator<ICollection<HttpHeader>> GetEnumerator()
+            => this.headers.Values.GetEnumerator();
+
+        IEnumerator IEnumerable.GetEnumerator()
+            => this.headers.Values.GetEnumerator();
+
+>>>>>>> origin/master
     }
 }
