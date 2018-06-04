@@ -10,7 +10,7 @@
         //GET /
         public IHttpResponse Index()
         {
-            return new ViewResponse(HttpStatusCode.Ok,new HomeIndexView());
+            return new ViewResponse(HttpStatusCode.Ok,new IndexView());
         }
     }
 }

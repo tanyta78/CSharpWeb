@@ -10,6 +10,7 @@
             MyValidator.ThrowIfNullOrEmpty(redirectUrl, nameof(redirectUrl));
 
             this.StatusCode = HttpStatusCode.Found;
+            
             this.Headers.Add(new HttpHeader("Location", redirectUrl));
         }
     }

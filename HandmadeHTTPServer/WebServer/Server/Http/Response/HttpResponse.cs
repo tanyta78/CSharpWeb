@@ -23,13 +23,12 @@
         {
             var response = new StringBuilder();
 
-            var statusCode = (int)this.StatusCode;
+            var statusCodeNumber = (int)this.StatusCode;
 
-            response.AppendLine($"HTTP/1.1 {statusCode} {this.statusCodeMessage}");
+            response.AppendLine($"HTTP/1.1 {statusCodeNumber} {this.statusCodeMessage}");
 
             response.AppendLine(this.Headers.ToString());
-            response.AppendLine();
-
+         
             return response.ToString();
         }
     }

@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Common;
     using Contracts;
 
@@ -41,6 +42,6 @@
         }
 
         public override string ToString()
-       =>String.Join(Environment.NewLine,this.headers);
+       =>String.Join(Environment.NewLine,this.headers.Select(h=>h.Value.ToString()));
     }
 }

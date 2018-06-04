@@ -11,10 +11,12 @@
 
     public class HttpRequest : IHttpRequest
     {
-
+        private readonly string requestText;
+        
         public HttpRequest(string requestText)
         {
             MyValidator.ThrowIfNullOrEmpty(requestText, nameof(requestText));
+            this.requestText = requestText;
 
             this.FormData = new Dictionary<string, string>();
             this.Headers = new HttpHeaderCollection();
@@ -89,7 +91,7 @@
                 return;
             }
             // username=pesho&pass=133
-           this.ParseQuery(formDataLine,this.QueryParameters);
+           this.ParseQuery(formDataLine,this.FormData);
         }
 
         private void ParseParameters()
@@ -159,11 +161,11 @@
                 return;
             }
 
-            var queryPairs = query.Split(new[] { '&' }, StringSplitOptions.RemoveEmptyEntries);
+            var queryPairs = query.Split(new[] { '&' });
 
             foreach (var queryPair in queryPairs)
             {
-                var querykvp = queryPair.Split(new[] {'='}, StringSplitOptions.RemoveEmptyEntries);
+                var querykvp = queryPair.Split(new[] {'='});
                 if (querykvp.Length != 2)
                 {
                     return;
@@ -175,6 +177,8 @@
                dict.Add(queryKey, queryValue);
             }
         }
+
+        public override string ToString() => this.requestText;
     }
 }
 

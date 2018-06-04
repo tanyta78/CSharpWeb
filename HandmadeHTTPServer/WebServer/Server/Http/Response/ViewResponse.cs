@@ -15,6 +15,8 @@
 
             this.view = view;
             this.StatusCode = statusCode;
+            
+    
         }
 
         private void ValidateStatusCode(HttpStatusCode statusCode)
@@ -22,7 +24,7 @@
             var statusCodeNumber = (int) statusCode;
             if (299<statusCodeNumber && statusCodeNumber < 400)
             {
-               throw new InvalidResponseException("View responses need a status code below 300 and above 400 (inclusive)");
+               throw new InvalidResponseException("View responses need a status code below 300 and above 400 (inclusive).");
             }
         }
 

@@ -28,6 +28,8 @@
             this.InitializeRouteConfig(appRouteConfig);
         }
 
+        public Dictionary<HttpRequestMethod, Dictionary<string, IRoutingContext>> Routes => this.routes;
+
         private void InitializeRouteConfig(IAppRouteConfig appRouteConfig)
         {
             foreach (var registeredRoute in appRouteConfig.Routes)
@@ -40,9 +42,13 @@
                 {
                     var route = routeWithHandler.Key;
                     var handler = routeWithHandler.Value;
+                    
                     var parameters = new List<string>();
+                    
                     var parsedRouteRegex = this.ParseRoute(route, parameters);
+                    
                     var routingContext = new RoutingContext(handler, parameters);
+                    
                     this.routes[requestMethod].Add(parsedRouteRegex, routingContext);
                 }
             }
@@ -50,32 +56,32 @@
 
         private string ParseRoute(string route, List<string> parameters)
         {
-            var parsedRegex = new StringBuilder();
-            parsedRegex.Append('^');
-
             if (route == "/")
             {
-                parsedRegex.Append("/$");
-                return parsedRegex.ToString();
+               return "^/$";
             }
-
+            
+            var result = new StringBuilder();
+            
+            result.Append('^/');
+            
             var tokens = route.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
 
-            this.ParseTokens(parameters, tokens, parsedRegex);
+            this.ParseTokens(parameters, tokens, result);
 
-            return parsedRegex.ToString();
+            return result.ToString();
         }
 
-        private void ParseTokens(List<string> parameters, string[] tokens, StringBuilder parsedRegex)
+        private void ParseTokens(List<string> parameters, string[] tokens, StringBuilder result)
         {
             for (int i = 0; i < tokens.Length; i++)
             {
                 var end = i == tokens.Length - 1 ? "$" : "/";
                 var currentToken = tokens[i];
 
-                if (!currentToken.StartsWith("(") && !currentToken.EndsWith(")"))
+                if (!currentToken.StartsWith('{') && !currentToken.EndsWith('}'))
                 {
-                    parsedRegex.Append($"{currentToken}{end}");
+                    result.Append($"{currentToken}{end}");
                     continue;
                 }
 
@@ -91,11 +97,8 @@
                 var match = parameterMatch.Value;
                 var paramName = match.Substring(1, match.Length - 2);
                 parameters.Add(paramName);
-                parsedRegex.Append($"{currentToken.Substring(1, currentToken.Length - 2)}{end}");
+                result.Append($"{currentToken.Substring(1, currentToken.Length - 2)}{end}");
             }
         }
-
-
-        public Dictionary<HttpRequestMethod, Dictionary<string, IRoutingContext>> Routes => this.routes;
     }
 }

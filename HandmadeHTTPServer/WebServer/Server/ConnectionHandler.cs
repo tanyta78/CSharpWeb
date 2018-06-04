@@ -35,6 +35,7 @@
                 var httpResponse = new HttpHandler(this.serverRouteConfig).Handle(httpContext);
 
                 var responseBytes = Encoding.UTF8.GetBytes(httpResponse.ToString());
+                
                 var byteSegments = new ArraySegment<byte>(responseBytes);
 
                 await this.client.SendAsync(byteSegments, SocketFlags.None);
@@ -52,12 +53,13 @@
         private async Task<HttpRequest> ReadRequest()
         {
             var request = new StringBuilder();
+            
             var data = new ArraySegment<byte>(new byte[1024]);
           
 
             while (true)
             {
-                int numBytesRead = await this.client.ReceiveAsync(data, SocketFlags.None);
+                int numBytesRead = await this.client.ReceiveAsync(data.Array, SocketFlags.None);
 
                 if (numBytesRead==0)
                 {
@@ -68,7 +70,7 @@
 
                 request.Append(bytesAsString);
                 
-                if (numBytesRead<1024)
+                if (numBytesRead<1023)
                 {
                     break;
                 }

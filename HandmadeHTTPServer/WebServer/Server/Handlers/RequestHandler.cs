@@ -6,11 +6,11 @@
     using Http;
     using Http.Contracts;
    
-    public abstract class RequestHandler:IRequestHandler
+    public class RequestHandler:IRequestHandler
     {
         private readonly Func<IHttpRequest, IHttpResponse> handlingFunc;
 
-        protected RequestHandler(Func<IHttpRequest, IHttpResponse> func)
+        public RequestHandler(Func<IHttpRequest, IHttpResponse> func)
         {
             MyValidator.ThrowIfNull(func,nameof(func));
             
@@ -21,7 +21,7 @@
         {
             var response = this.handlingFunc(httpContext.Request);
             
-            response.Headers.Add(new HttpHeader("Content-Type", "text/plain"));
+            response.Headers.Add(new HttpHeader("Content-Type", "text/html"));
 
             return response;
         }
