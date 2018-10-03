@@ -12,11 +12,19 @@
         //GET /
         public IHttpResponse Index()
         {
+<<<<<<< HEAD
             var response = new ViewResponse(HttpStatusCode.Ok, new IndexView());
+=======
+<<<<<<< HEAD
+            return new ViewResponse(HttpStatusCode.Ok,new IndexView());
+=======
+            var response = new ViewResponse(HttpStatusCode.Ok, new HomeIndexView());
+>>>>>>> b8e76d80beb0eff0ab4ae9ca15efe2b0b13a1fab
 
             response.Cookies.Add(new HttpCookie("lang", "en"));
 
             return response;
+>>>>>>> origin/master
         }
 
         //GET/testsession

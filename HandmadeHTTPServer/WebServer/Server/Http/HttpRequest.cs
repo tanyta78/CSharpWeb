@@ -12,10 +12,15 @@
     public class HttpRequest : IHttpRequest
     {
         private readonly string requestText;
+<<<<<<< HEAD
+        
+=======
 
+>>>>>>> origin/master
         public HttpRequest(string requestText)
         {
             MyValidator.ThrowIfNullOrEmpty(requestText, nameof(requestText));
+            this.requestText = requestText;
 
             this.requestText = requestText;
 
@@ -88,8 +93,13 @@
             {
                 BadRequestException.ThrowFromInvalidRequest();
             }
+<<<<<<< HEAD
+            // username=pesho&pass=133
+           this.ParseQuery(formDataLine,this.FormData);
+=======
 
             return parsedMethod;
+>>>>>>> origin/master
         }
 
         private string ParsePath(string url)
@@ -198,9 +208,18 @@
 
             foreach (var queryPair in queryPairs)
             {
+<<<<<<< HEAD
                 var queryKvp = queryPair.Split(new[] { '=' });
 
                 if (queryKvp.Length != 2)
+=======
+                var querykvp = queryPair.Split(new[] {'='});
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
+                if (querykvp.Length != 2)
+>>>>>>> b8e76d80beb0eff0ab4ae9ca15efe2b0b13a1fab
                 {
                     return;
                 }
@@ -212,6 +231,7 @@
             }
         }
 
+<<<<<<< HEAD
         private void SetSession()
         {
             if (this.Cookies.ContainsKey(SessionStore.SessionCookieKey))
@@ -223,6 +243,8 @@
             }
         }
 
+=======
+>>>>>>> b8e76d80beb0eff0ab4ae9ca15efe2b0b13a1fab
         public override string ToString() => this.requestText;
     }
 }

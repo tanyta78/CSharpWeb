@@ -3,7 +3,11 @@
     using System;
     using System.Collections;
     using System.Collections.Generic;
+<<<<<<< HEAD
+    using System.Linq;
+=======
     using System.Text;
+>>>>>>> origin/master
     using Common;
     using Contracts;
 
@@ -58,6 +62,9 @@
         }
 
         public override string ToString()
+<<<<<<< HEAD
+       =>String.Join(Environment.NewLine,this.headers.Select(h=>h.Value.ToString()));
+=======
         {
             var sb = new StringBuilder();
 
@@ -80,5 +87,6 @@
         IEnumerator IEnumerable.GetEnumerator()
             => this.headers.Values.GetEnumerator();
 
+>>>>>>> origin/master
     }
 }

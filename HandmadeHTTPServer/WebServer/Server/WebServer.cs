@@ -28,7 +28,7 @@
             this.tcpListener.Start();
             this.isRunning = true;
 
-            Console.WriteLine($"Server started. Listening to TCP clients at {localHostIpAddress}: {this.port}");
+            Console.WriteLine($"Server running on {localHostIpAddress}: {this.port}");
 
            Task.Run(this.ListenLoop).Wait();
            

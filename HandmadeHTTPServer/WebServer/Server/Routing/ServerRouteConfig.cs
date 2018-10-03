@@ -30,11 +30,16 @@
             this.InitializeRouteConfig(appRouteConfig);
         }
 
+<<<<<<< HEAD
         public IDictionary<HttpRequestMethod, IDictionary<string, IRoutingContext>> Routes => this.routes;
 
         public ICollection<string> AnonymousPaths { get; private set; }
 
     
+=======
+        public Dictionary<HttpRequestMethod, Dictionary<string, IRoutingContext>> Routes => this.routes;
+
+>>>>>>> b8e76d80beb0eff0ab4ae9ca15efe2b0b13a1fab
         private void InitializeRouteConfig(IAppRouteConfig appRouteConfig)
         {
             foreach (var registeredRoute in appRouteConfig.Routes)
@@ -46,6 +51,7 @@
                 {
                     var route = routeWithHandler.Key;
                     var handler = routeWithHandler.Value;
+<<<<<<< HEAD
 
                     var parameters = new List<string>();
 
@@ -53,6 +59,15 @@
 
                     var routingContext = new RoutingContext(handler, parameters);
 
+=======
+                    
+                    var parameters = new List<string>();
+                    
+                    var parsedRouteRegex = this.ParseRoute(route, parameters);
+                    
+                    var routingContext = new RoutingContext(handler, parameters);
+                    
+>>>>>>> b8e76d80beb0eff0ab4ae9ca15efe2b0b13a1fab
                     this.routes[requestMethod].Add(parsedRouteRegex, routingContext);
                 }
             }
@@ -62,6 +77,7 @@
         {
             if (route == "/")
             {
+<<<<<<< HEAD
                 return "^/$";
             }
 
@@ -77,6 +93,23 @@
         }
 
         private void ParseTokens(string[] tokens, List<string> parameters, StringBuilder result)
+=======
+               return "^/$";
+            }
+            
+            var result = new StringBuilder();
+            
+            result.Append('^/');
+            
+            var tokens = route.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+
+            this.ParseTokens(parameters, tokens, result);
+
+            return result.ToString();
+        }
+
+        private void ParseTokens(List<string> parameters, string[] tokens, StringBuilder result)
+>>>>>>> b8e76d80beb0eff0ab4ae9ca15efe2b0b13a1fab
         {
             for (int i = 0; i < tokens.Length; i++)
             {
@@ -98,6 +131,7 @@
                 }
 
                 var match = parameterMatch.Value;
+<<<<<<< HEAD
                 var parameter = match.Substring(1, match.Length - 2);
 
                 parameters.Add(parameter);
@@ -105,6 +139,11 @@
                 var currentTokenWithoutCurlyBrackets = currentToken.Substring(1, currentToken.Length - 2);
 
                 result.Append($"{currentTokenWithoutCurlyBrackets}{end}");
+=======
+                var paramName = match.Substring(1, match.Length - 2);
+                parameters.Add(paramName);
+                result.Append($"{currentToken.Substring(1, currentToken.Length - 2)}{end}");
+>>>>>>> b8e76d80beb0eff0ab4ae9ca15efe2b0b13a1fab
             }
         }
     }

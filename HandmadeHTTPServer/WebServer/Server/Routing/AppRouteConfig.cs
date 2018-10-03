@@ -35,17 +35,30 @@
 
         public void Get(string route, Func<IHttpRequest, IHttpResponse> handler)
         {
+<<<<<<< HEAD
             this.AddRoute(route, HttpRequestMethod.Get, new RequestHandler(handler));
+=======
+            this.AddRoute(route,HttpRequestMethod.Get,new RequestHandler(handler));
+>>>>>>> b8e76d80beb0eff0ab4ae9ca15efe2b0b13a1fab
         }
 
         public void Post(string route, Func<IHttpRequest, IHttpResponse> handler)
         {
+<<<<<<< HEAD
             this.AddRoute(route, HttpRequestMethod.Post, new RequestHandler(handler));
         }
 
         public void AddRoute(string route, HttpRequestMethod method, RequestHandler handler)
         {
             this.routes[method].Add(route, handler);
+=======
+            this.AddRoute(route, HttpRequestMethod.Post,new RequestHandler(handler));
+        }
+
+        public void AddRoute(string route,HttpRequestMethod method, RequestHandler handler)
+        {
+          this.routes[method].Add(route,handler);
+>>>>>>> b8e76d80beb0eff0ab4ae9ca15efe2b0b13a1fab
         }
     }
 }

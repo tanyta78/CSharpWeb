@@ -5,8 +5,13 @@
     using Contracts;
     using Http;
     using Http.Contracts;
+<<<<<<< HEAD
 
     public class RequestHandler : IRequestHandler
+=======
+   
+    public class RequestHandler:IRequestHandler
+>>>>>>> b8e76d80beb0eff0ab4ae9ca15efe2b0b13a1fab
     {
         private readonly Func<IHttpRequest, IHttpResponse> handlingFunc;
 
@@ -31,6 +36,10 @@
             }
 
             var response = this.handlingFunc(httpContext.Request);
+<<<<<<< HEAD
+            
+            response.Headers.Add(new HttpHeader("Content-Type", "text/html"));
+=======
 
             if (sessionIdToSend != null)
             {
@@ -46,6 +55,7 @@
             {
                 response.Headers.Add(HttpHeader.SetCookie, cookie.ToString());
             }
+>>>>>>> origin/master
 
             return response;
         }

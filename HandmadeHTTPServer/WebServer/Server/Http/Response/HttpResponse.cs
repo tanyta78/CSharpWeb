@@ -25,10 +25,22 @@
             var response = new StringBuilder();
 
             var statusCodeNumber = (int)this.StatusCode;
+<<<<<<< HEAD
             response.AppendLine($"HTTP/1.1 {statusCodeNumber} {this.statusCodeMessage}");
 
             response.AppendLine(this.Headers.ToString());
 
+=======
+
+            response.AppendLine($"HTTP/1.1 {statusCodeNumber} {this.statusCodeMessage}");
+
+            response.AppendLine(this.Headers.ToString());
+<<<<<<< HEAD
+         
+=======
+          
+>>>>>>> origin/master
+>>>>>>> b8e76d80beb0eff0ab4ae9ca15efe2b0b13a1fab
             return response.ToString();
         }
     }
