@@ -5,21 +5,37 @@
     using Contracts;
     using Http;
     using Http.Contracts;
-   
-    public abstract class RequestHandler:IRequestHandler
+
+    public class RequestHandler : IRequestHandler
     {
         private readonly Func<IHttpRequest, IHttpResponse> handlingFunc;
 
-        protected RequestHandler(Func<IHttpRequest, IHttpResponse> func)
+        public RequestHandler(Func<IHttpRequest, IHttpResponse> func)
         {
-            MyValidator.ThrowIfNull(func,nameof(func));
-            
+            MyValidator.ThrowIfNull(func, nameof(func));
+
             this.handlingFunc = func;
         }
-        
+
         public IHttpResponse Handle(IHttpContext httpContext)
         {
+            string sessionIdToSend = null;
+
+            if (!httpContext.Request.Cookies.ContainsKey(SessionStore.SessionCookieKey))
+            {
+                var sessionId = Guid.NewGuid().ToString();
+
+                httpContext.Request.Session = SessionStore.Get(sessionId);
+
+                sessionIdToSend = sessionId;
+            }
+
             var response = this.handlingFunc(httpContext.Request);
+
+            if (sessionIdToSend != null)
+            {
+                response.Headers.Add(HttpHeader.SetCookie, $"{SessionStore.SessionCookieKey}={sessionIdToSend}; HttpOnly; path=/");
+            }
 
             if (!response.Headers.ContainsKey(HttpHeader.ContentType))
             {

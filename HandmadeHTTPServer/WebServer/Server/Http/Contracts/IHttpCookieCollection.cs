@@ -1,6 +1,7 @@
 ﻿namespace WebServer.Server.Http.Contracts
 {
     using System.Collections.Generic;
+
     public interface IHttpCookieCollection:IEnumerable<HttpCookie>
     {
         void Add(HttpCookie cookie);

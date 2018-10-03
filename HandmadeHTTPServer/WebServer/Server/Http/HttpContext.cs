@@ -10,6 +10,7 @@
         public HttpContext(IHttpRequest request)
         {
             MyValidator.ThrowIfNull(request,nameof(request));
+
             this.request = request;
         }
 

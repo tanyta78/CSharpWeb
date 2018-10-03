@@ -1,7 +1,6 @@
 ﻿namespace WebServer.Server.Http
 {
-    using System.Net.Mime;
-    using Common;
+   using Common;
 
     public class HttpHeader
     {
@@ -24,6 +23,6 @@
 
         public string Value { get; private set; }
 
-        public override string ToString() => this.Key + ": " + this.Value;
+        public override string ToString() => $"{this.Key}: {this.Value}";
     }
 }

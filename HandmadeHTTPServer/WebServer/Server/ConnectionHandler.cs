@@ -42,7 +42,7 @@
                 Console.WriteLine("====REQUEST====");
                 Console.WriteLine(httpRequest);
                 Console.WriteLine("====RESPONSE====");
-                Console.WriteLine(httpResponse.ToString());
+                Console.WriteLine(httpResponse);
                 Console.WriteLine();
             }
             
@@ -68,7 +68,7 @@
 
                 request.Append(bytesAsString);
                 
-                if (numBytesRead<1024)
+                if (numBytesRead<1023)
                 {
                     break;
                 }

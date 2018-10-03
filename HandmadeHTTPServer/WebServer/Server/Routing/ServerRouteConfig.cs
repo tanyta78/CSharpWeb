@@ -10,11 +10,13 @@
 
     public class ServerRouteConfig : IServerRouteConfig
     {
-        private readonly Dictionary<HttpRequestMethod, Dictionary<string, IRoutingContext>> routes;
+        private readonly IDictionary<HttpRequestMethod, IDictionary<string, IRoutingContext>> routes;
 
         public ServerRouteConfig(IAppRouteConfig appRouteConfig)
         {
-            this.routes = new Dictionary<HttpRequestMethod, Dictionary<string, IRoutingContext>>();
+            this.AnonymousPaths = new List<string>(appRouteConfig.AnonymousPaths);
+
+            this.routes = new Dictionary<HttpRequestMethod, IDictionary<string, IRoutingContext>>();
 
             var availableMethods = Enum
                 .GetValues(typeof(HttpRequestMethod))
@@ -28,21 +30,29 @@
             this.InitializeRouteConfig(appRouteConfig);
         }
 
+        public IDictionary<HttpRequestMethod, IDictionary<string, IRoutingContext>> Routes => this.routes;
+
+        public ICollection<string> AnonymousPaths { get; private set; }
+
+    
         private void InitializeRouteConfig(IAppRouteConfig appRouteConfig)
         {
             foreach (var registeredRoute in appRouteConfig.Routes)
             {
-                var routesWithHandlers = registeredRoute.Value;
                 var requestMethod = registeredRoute.Key;
-
+                var routesWithHandlers = registeredRoute.Value;
 
                 foreach (var routeWithHandler in routesWithHandlers)
                 {
                     var route = routeWithHandler.Key;
                     var handler = routeWithHandler.Value;
+
                     var parameters = new List<string>();
+
                     var parsedRouteRegex = this.ParseRoute(route, parameters);
+
                     var routingContext = new RoutingContext(handler, parameters);
+
                     this.routes[requestMethod].Add(parsedRouteRegex, routingContext);
                 }
             }
@@ -50,52 +60,52 @@
 
         private string ParseRoute(string route, List<string> parameters)
         {
-            var parsedRegex = new StringBuilder();
-            parsedRegex.Append('^');
-
             if (route == "/")
             {
-                parsedRegex.Append("/$");
-                return parsedRegex.ToString();
+                return "^/$";
             }
 
-            var tokens = route.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+            var result = new StringBuilder();
 
-            this.ParseTokens(parameters, tokens, parsedRegex);
+            result.Append("^/");
 
-            return parsedRegex.ToString();
+            var tokens = route.Split(new[] {'/'}, StringSplitOptions.RemoveEmptyEntries);
+
+            this.ParseTokens(tokens, parameters, result);
+
+            return result.ToString();
         }
 
-        private void ParseTokens(List<string> parameters, string[] tokens, StringBuilder parsedRegex)
+        private void ParseTokens(string[] tokens, List<string> parameters, StringBuilder result)
         {
             for (int i = 0; i < tokens.Length; i++)
             {
                 var end = i == tokens.Length - 1 ? "$" : "/";
                 var currentToken = tokens[i];
 
-                if (!currentToken.StartsWith("(") && !currentToken.EndsWith(")"))
+                if (!currentToken.StartsWith('{') && !currentToken.EndsWith('}'))
                 {
-                    parsedRegex.Append($"{currentToken}{end}");
+                    result.Append($"{currentToken}{end}");
                     continue;
                 }
 
-                var pattern = "<\\w+>";
-                var parameterRegex = new Regex(pattern);
+                var parameterRegex = new Regex("<\\w+>");
                 var parameterMatch = parameterRegex.Match(currentToken);
 
                 if (!parameterMatch.Success)
                 {
-                    throw new InvalidOperationException($"Route parameter in '{currentToken}'is not valid!");
+                    throw new InvalidOperationException($"Route parameter in '{currentToken}' is not valid.");
                 }
 
                 var match = parameterMatch.Value;
-                var paramName = match.Substring(1, match.Length - 2);
-                parameters.Add(paramName);
-                parsedRegex.Append($"{currentToken.Substring(1, currentToken.Length - 2)}{end}");
+                var parameter = match.Substring(1, match.Length - 2);
+
+                parameters.Add(parameter);
+
+                var currentTokenWithoutCurlyBrackets = currentToken.Substring(1, currentToken.Length - 2);
+
+                result.Append($"{currentTokenWithoutCurlyBrackets}{end}");
             }
         }
-
-
-        public Dictionary<HttpRequestMethod, Dictionary<string, IRoutingContext>> Routes => this.routes;
     }
 }
