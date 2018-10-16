@@ -20,31 +20,28 @@
             this.requestText = requestText;
 
             this.FormData = new Dictionary<string, string>();
-            this.Headers = new HttpHeaderCollection();
-            this.QueryParameters = new Dictionary<string, string>();
             this.UrlParameters = new Dictionary<string, string>();
-            this.Cookies=new HttpCookieCollection();
+            this.Headers = new HttpHeaderCollection();
+            this.Cookies = new HttpCookieCollection();
 
             this.ParseRequest(requestText);
         }
 
-
-
         public IDictionary<string, string> FormData { get; private set; }
 
-        public HttpHeaderCollection Headers { get; private set; }
+        public IHttpHeaderCollection Headers { get; private set; }
 
-        public IHttpCookieCollection Cookies { get; set; }
+        public IHttpCookieCollection Cookies { get; private set; }
 
         public string Path { get; private set; }
-
-        public IDictionary<string, string> QueryParameters { get; private set; }
 
         public HttpRequestMethod Method { get; private set; }
 
         public string Url { get; private set; }
 
         public IDictionary<string, string> UrlParameters { get; private set; }
+
+        public IHttpSession Session { get; set; }
 
         public void AddUrlParameter(string key, string value)
         {
@@ -56,37 +53,32 @@
 
         private void ParseRequest(string requestText)
         {
-            var requestLines = requestText.Split(
-                Environment.NewLine );
+            var requestLines = requestText.Split(Environment.NewLine);
 
             if (!requestLines.Any())
             {
                 BadRequestException.ThrowFromInvalidRequest();
             }
 
-            //{Method} {URL} HTTP/1.1
-            var reqLine = requestLines.First().Split(
+            var requestLine = requestLines.First().Split(
                 new[] { ' ' },
                 StringSplitOptions.RemoveEmptyEntries);
 
-            if (reqLine.Length != 3
-                || reqLine[2].ToLower() != "http/1.1")
+            if (requestLine.Length != 3 || requestLine[2].ToLower() != "http/1.1")
             {
                 BadRequestException.ThrowFromInvalidRequest();
-
             }
 
-            this.Method = this.ParseMethod(reqLine.First());
-            this.Url = reqLine[1];
+            this.Method = this.ParseMethod(requestLine.First());
+            this.Url = requestLine[1];
             this.Path = this.ParsePath(this.Url);
 
-            //{Headers} while empty line
             this.ParseHeaders(requestLines);
             this.ParseCookies();
             this.ParseParameters();
-
-            //{Form Data}
             this.ParseFormData(requestLines.Last());
+
+            this.SetSession();
         }
 
         private HttpRequestMethod ParseMethod(string method)
@@ -101,24 +93,20 @@
         }
 
         private string ParsePath(string url)
-        {
-            // / user/register/5?name=Pesho#gosho
-            return url.Split(new[] { '?', '#' }, StringSplitOptions.RemoveEmptyEntries)[0];
-        }
+            => url.Split(new[] { '?', '#' }, StringSplitOptions.RemoveEmptyEntries)[0];
 
         private void ParseHeaders(string[] requestLines)
         {
-            var emptyLineIndex = Array.IndexOf(requestLines, String.Empty);
+            var emptyLineAfterHeadersIndex = Array.IndexOf(requestLines, string.Empty);
 
-            for (int i = 1; i < emptyLineIndex; i++)
+            for (int i = 1; i < emptyLineAfterHeadersIndex; i++)
             {
                 var currentLine = requestLines[i];
-                var headerParts =currentLine.Split(new[] { ": " }, StringSplitOptions.RemoveEmptyEntries);
+                var headerParts = currentLine.Split(new[] { ": " }, StringSplitOptions.RemoveEmptyEntries);
 
                 if (headerParts.Length != 2)
                 {
                     BadRequestException.ThrowFromInvalidRequest();
-
                 }
 
                 var headerKey = headerParts[0];
@@ -132,7 +120,6 @@
             if (!this.Headers.ContainsKey(HttpHeader.Host))
             {
                 BadRequestException.ThrowFromInvalidRequest();
-
             }
         }
 
@@ -184,12 +171,10 @@
             }
 
             var query = this.Url
-                            .Split(new[] { '?' }, StringSplitOptions.RemoveEmptyEntries)
-                            .Last();
+                .Split(new[] { '?' }, StringSplitOptions.RemoveEmptyEntries)
+                .Last();
 
-            // /register?name=ivan
             this.ParseQuery(query, this.UrlParameters);
-
         }
 
         private void ParseFormData(string formDataLine)
@@ -198,13 +183,13 @@
             {
                 return;
             }
-            // username=pesho&pass=133
-           this.ParseQuery(formDataLine,this.FormData);
+
+            this.ParseQuery(formDataLine, this.FormData);
         }
-        
-        private void ParseQuery(string query,IDictionary<string,string>dict)
+
+        private void ParseQuery(string query, IDictionary<string, string> dict)
         {
-           if (!query.Contains('='))
+            if (!query.Contains('='))
             {
                 return;
             }
@@ -213,19 +198,39 @@
 
             foreach (var queryPair in queryPairs)
             {
+<<<<<<< HEAD
+                var queryKvp = queryPair.Split(new[] { '=' });
+
+                if (queryKvp.Length != 2)
+=======
                 var querykvp = queryPair.Split(new[] {'='});
                 if (querykvp.Length != 2)
+>>>>>>> b8e76d80beb0eff0ab4ae9ca15efe2b0b13a1fab
                 {
                     return;
                 }
 
-                var queryKey = WebUtility.UrlDecode(querykvp[0]);
-                var queryValue = WebUtility.UrlDecode(querykvp[1]);
+                var queryKey = WebUtility.UrlDecode(queryKvp[0]);
+                var queryValue = WebUtility.UrlDecode(queryKvp[1]);
 
-               dict.Add(queryKey, queryValue);
+                dict.Add(queryKey, queryValue);
             }
         }
 
+<<<<<<< HEAD
+        private void SetSession()
+        {
+            if (this.Cookies.ContainsKey(SessionStore.SessionCookieKey))
+            {
+                var cookie = this.Cookies.GetCookie(SessionStore.SessionCookieKey);
+                var sessionId = cookie.Value;
+
+                this.Session = SessionStore.Get(sessionId);
+            }
+        }
+
+=======
+>>>>>>> b8e76d80beb0eff0ab4ae9ca15efe2b0b13a1fab
         public override string ToString() => this.requestText;
     }
 }
