@@ -30,11 +30,7 @@
             response.AppendLine($"HTTP/1.1 {statusCodeNumber} {this.statusCodeMessage}");
 
             response.AppendLine(this.Headers.ToString());
-<<<<<<< HEAD
-         
-=======
           
->>>>>>> origin/master
             return response.ToString();
         }
     }

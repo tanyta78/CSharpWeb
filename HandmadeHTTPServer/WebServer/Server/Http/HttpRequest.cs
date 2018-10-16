@@ -12,11 +12,6 @@
     public class HttpRequest : IHttpRequest
     {
         private readonly string requestText;
-<<<<<<< HEAD
-        
-=======
-
->>>>>>> origin/master
         public HttpRequest(string requestText)
         {
             MyValidator.ThrowIfNullOrEmpty(requestText, nameof(requestText));
@@ -101,13 +96,8 @@
             {
                 BadRequestException.ThrowFromInvalidRequest();
             }
-<<<<<<< HEAD
-            // username=pesho&pass=133
-           this.ParseQuery(formDataLine,this.FormData);
-=======
 
             return parsedMethod;
->>>>>>> origin/master
         }
 
         private string ParsePath(string url)
@@ -224,10 +214,6 @@
             foreach (var queryPair in queryPairs)
             {
                 var querykvp = queryPair.Split(new[] {'='});
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master
                 if (querykvp.Length != 2)
                 {
                     return;
