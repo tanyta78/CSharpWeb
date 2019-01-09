@@ -1,0 +1,36 @@
+body {
+    background: url(/Bootstrap1/img/cofee3.jpeg) no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Coiny', cursive;
+}
+
+.rowHeight {
+    height: 400px;
+}
+
+h1 {
+    color: black;
+    font-size: 2.5em;
+}
+
+.bg {
+    background-color: #c1c1c1;
+    opacity: 0.6;
+}
+
+.footer {
+    background-color: rgb(175, 143, 143);
+    bottom: 0;
+}
+
+
+img{
+    height: 200px;
+    width: 200px;
+    padding-bottom: 50px;
+}
+
+p{
+    font-size: 18px;
+    padding: 10px;
+}

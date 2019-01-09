@@ -1,0 +1,19 @@
+body{
+    background: url(/Bootstrap1/img/relaxing-1979674_640.jpg)no-repeat center;
+    background-size: cover;
+}
+
+.hero{
+    color:rgba(204, 198, 196, 0.945);
+    margin-top: 20%;
+    text-align: center;
+    font-size: 75px;
+    letter-spacing: -.05em;
+    line-height: 1.2em;
+    font-family: 'Revalia', cursive;
+}
+
+.myimg{
+    height: 100px;
+    width: 200px;
+}

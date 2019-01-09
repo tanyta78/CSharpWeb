@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+    <title>Document</title>
+    <style>
+        .myColorDiv {
+            background-color: green;
+            height: 70vh;
+        }
+
+        /* xs */
+        @media (max-width: 575px) {
+            .myColorDiv {
+                background-color: red;
+                height: 100vh;
+            }
+        }
+
+        /* sm */
+        @media (min-width: 576px) and (max-width: 767px) {
+            .myColorDiv {
+                background-color: blue;
+                height: 100vh;
+            }
+        }
+
+        /* md */
+        @media (min-width: 768px) and (max-width: 991px) {
+            .myColorDiv {
+                background-color: orange;
+                height: 100vh;
+            }
+        }
+
+        /* lg */
+        @media (min-width: 992px) and (max-width: 1199px) {
+            .myColorDiv {
+                background-color: black;
+                height: 100vh;
+            }
+        }
+
+        /* xl */
+        @media (min-width: 1200px) {
+            .myColorDiv {
+                background-color: pink;
+                height: 100vh;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Lorem ipsum dolor sit amet.</h1>
+    <div class="container myColorDiv">
+        a container
+    </div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+
+</html>
